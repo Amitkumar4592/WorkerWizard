@@ -1,0 +1,72 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Success Message Section */
+.success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    min-height: calc(100vh - 60px); /* Full height minus header height */
+    background-color: #ecf0f1; /* Light background color */
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #2c3e50; /* Darker text color */
+    text-align: center; /* Center the heading */
+}
+
+p {
+    font-size: 1.2em; /* Slightly larger text for the message */
+    color: #34495e; /* Lighter text color */
+    margin-bottom: 30px; /* Space below the message */
+    text-align: center; /* Center the paragraph */
+}
+
+/* Button Styles */
+.btn {
+    padding: 10px 20px;
+    background-color: #1abc9c; /* Button background */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1.1em;
+    cursor: pointer; /* Pointer cursor on hover */
+    text-decoration: none; /* Remove underline from links */
+    display: inline-block; /* Allow padding */
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #16a085; /* Darker button color on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .success-message {
+        padding: 40px 10px; /* Adjust padding for smaller screens */
+    }
+
+    h2 {
+        font-size: 1.8em; /* Adjust heading size */
+    }
+
+    p {
+        font-size: 1em; /* Adjust paragraph size */
+    }
+
+    .btn {
+        padding: 8px 16px; /* Smaller button padding */
+    }
+}

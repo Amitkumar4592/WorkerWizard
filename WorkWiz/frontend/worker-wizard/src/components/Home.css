@@ -1,0 +1,105 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ecf0f1; /* Light background */
+    padding: 60px 20px;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-text {
+    max-width: 600px; /* Limit the width of the text */
+}
+
+.hero-text h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #2c3e50; /* Darker text color */
+}
+
+.hero-text ul {
+    list-style-type: none;
+    margin: 20px 0;
+    padding: 0;
+    font-size: 1.1em;
+    color: #34495e; /* Slightly lighter color for the list items */
+}
+
+.hero-text ul li {
+    margin: 10px 0;
+}
+
+/* Button Styling */
+.btn {
+    text-decoration: none;
+    color: white;
+    padding: 15px 30px;
+    background-color: #1abc9c; /* Button background */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.btn.getstarted {
+    font-size: 1.2em; /* Increase font size for 'Get Started' button */
+}
+
+.btn:hover {
+    background-color: #16a085; /* Darker button on hover */
+}
+
+/* Hero Image */
+.hero-image {
+    margin-top: 40px; /* Space between text and image */
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 500px; /* Limit the maximum width of the image */
+    height: auto;
+    border-radius: 10px; /* Slightly rounded corners */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .hero-text h2 {
+        font-size: 2em;
+    }
+
+    .hero-text ul li {
+        font-size: 1em; /* Adjust font size for smaller screens */
+    }
+
+    .btn {
+        padding: 10px 20px; /* Smaller button padding */
+    }
+}
