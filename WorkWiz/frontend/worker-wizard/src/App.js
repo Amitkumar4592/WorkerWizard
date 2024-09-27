@@ -9,6 +9,8 @@ import RegisterWorker from './components/RegisterWorker';
 import Search from './components/Search';
 import Success from './components/Success';
 import WorkerLogin from './components/WorkerLogin';
+import LoginUser from './components/LoginUser';
+import UserDashboard from './components/UserDashboard';
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
         <Route path="/register-worker" element={<RegisterWorker />} />
         <Route path="/worker-login" element={<WorkerLogin />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/user-dashboard" component={UserDashboard} />
         <Route path="/success" element={<Success />} />
         {/* Add more routes as needed */}
       </Routes>

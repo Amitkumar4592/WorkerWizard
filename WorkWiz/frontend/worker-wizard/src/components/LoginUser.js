@@ -1,11 +1,13 @@
-// src/components/UserLogin.js
+// src/components/LoginUser.js
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './LoginUser.css'; // Add your own CSS for styling
 
 const LoginUser = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const history = useHistory(); // Initialize useHistory
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -20,7 +22,8 @@ const LoginUser = () => {
         .then(data => {
             if (data.success) {
                 setMessage(data.message);
-                // Redirect or perform any other actions on successful login
+                // Redirect to the User Dashboard on successful login
+                history.push('/user-dashboard');
             } else {
                 setMessage(data.message);
             }
