@@ -81,6 +81,20 @@ app.post('/api/login-worker', async (req, res) => {
     }
 });
 
+// Fetch workers based on location
+app.get('/api/workers', async (req, res) => {
+    const { location } = req.query;
+
+    try {
+        const workers = await workersCollection.find({ location }).toArray(); // Assuming location is stored in the worker's document
+        res.status(200).json({ success: true, workers });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Error fetching workers' });
+    }
+});
+
+
 // Start server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
