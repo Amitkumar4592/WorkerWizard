@@ -1,7 +1,7 @@
 // mongo.js
 const { MongoClient } = require('mongodb');
 
-const uri = 'mongodb://localhost:27017/workerWizard';
+const uri = 'mongodb://localhost:27017/praneeth';
 const client = new MongoClient(uri);
 
 async function connectToMongoDB() {

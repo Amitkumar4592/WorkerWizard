@@ -9,7 +9,6 @@ import RegisterWorker from './components/RegisterWorker';
 import Search from './components/Search';
 import Success from './components/Success';
 import WorkerLogin from './components/WorkerLogin';
-import LoginUser from './components/LoginUser';
 import UserDashboard from './components/UserDashboard';
 
 
