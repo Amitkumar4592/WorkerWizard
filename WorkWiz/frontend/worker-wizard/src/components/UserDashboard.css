@@ -1,10 +1,12 @@
 /* UserDashboard.css */
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
+.dashboard-container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -12,13 +14,15 @@ h2 {
     color: #333;
 }
 
-h3 {
-    color: #666;
+.search-section {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-select {
+input {
     padding: 10px;
     margin: 10px 0;
+    width: 80%;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
@@ -26,7 +30,7 @@ select {
 
 button {
     padding: 10px 15px;
-    background-color: #28a745; /* Green background */
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -35,7 +39,17 @@ button {
 }
 
 button:hover {
-    background-color: #218838; /* Darker green on hover */
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.workers-list {
+    margin-top: 20px;
 }
 
 ul {
@@ -44,23 +58,13 @@ ul {
 }
 
 li {
-    background-color: #fff; /* White background for each worker */
+    background-color: #f9f9f9;
+    padding: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 15px;
-    margin: 10px 0;
+    margin-bottom: 10px;
 }
 
-p {
+li p {
     margin: 5px 0;
-}
-
-.error-message {
-    color: red;
-    text-align: center;
-}
-
-.success-message {
-    color: green;
-    text-align: center;
 }

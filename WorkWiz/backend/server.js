@@ -1,19 +1,25 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const connectToMongoDB = require('./mongo');
+const twilio = require('twilio');
+require('dotenv').config(); // For using environment variables
 
 const app = express();
-const port = 5000; // Changed to port 5000 as you initially mentioned
+const port = 5000;
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Twilio setup
+const accountSid = process.env.TWILIO_ACCOUNT_SID; // Twilio Account SID from .env
+const authToken = process.env.TWILIO_AUTH_TOKEN;   // Twilio Auth Token from .env
+const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER; // Twilio phone number from .env
+const client = new twilio(accountSid, authToken);
+
 // Connect to MongoDB
-let usersCollection;
-let workersCollection;
+let usersCollection, workersCollection;
 connectToMongoDB().then(db => {
     usersCollection = db.usersCollection;
     workersCollection = db.workersCollection;
@@ -28,21 +34,21 @@ app.post('/api/register-user', async (req, res) => {
         const result = await usersCollection.insertOne(newUser);
         res.status(201).json({ success: true, message: 'User registered successfully', userId: result.insertedId });
     } catch (err) {
-        console.error(err);
+        console.error('Error registering user:', err);
         res.status(500).json({ success: false, message: 'Error registering user' });
     }
 });
 
 // Worker registration endpoint
 app.post('/api/register-worker', async (req, res) => {
-    const { name, mobile, email, password, expertise, location } = req.body;
+    const { fullname, mobile, email, expertise, location, password } = req.body;
 
     try {
-        const newWorker = { name, mobile, email, password, expertise, location };
+        const newWorker = { fullname, mobile, email, expertise, location, password };
         const result = await workersCollection.insertOne(newWorker);
         res.status(201).json({ success: true, message: 'Worker registered successfully', workerId: result.insertedId });
     } catch (err) {
-        console.error(err);
+        console.error('Error registering worker:', err);
         res.status(500).json({ success: false, message: 'Error registering worker' });
     }
 });
@@ -52,48 +58,64 @@ app.post('/api/login-user', async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        // Find the user by email and password
         const user = await usersCollection.findOne({ email, password });
+
         if (user) {
-            res.status(200).json({ success: true, message: 'User logged in successfully', user });
+            console.log('User found:', user);  // Add this log to check the user object
+            console.log('User mobile:', user.mobile);  // Log the mobile number explicitly
+
+            // Return success with the user's mobile number
+            res.status(200).json({ success: true, message: 'Login successful', userMobile: user.mobile });
         } else {
-            res.status(401).json({ success: false, message: 'Invalid email or password' });
+            // If user is not found, return an error
+            res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: 'Error logging in user' });
+        console.error('Error logging in:', err);
+        res.status(500).json({ success: false, message: 'Error logging in' });
     }
 });
 
-// Worker login endpoint
-app.post('/api/login-worker', async (req, res) => {
-    const { email, password } = req.body;
+
+
+app.post('/api/assign-worker', async (req, res) => {
+    const { workerMobile, employerMobile } = req.body;
+    
+    console.log("Employer Mobile in backend:", employerMobile); // Debugging log
+
+    if (!employerMobile) {
+        return res.status(400).json({ success: false, message: 'Employer mobile number is required.' });
+    }
 
     try {
-        const worker = await workersCollection.findOne({ email, password });
-        if (worker) {
-            res.status(200).json({ success: true, message: 'Worker logged in successfully', worker });
-        } else {
-            res.status(401).json({ success: false, message: 'Invalid email or password' });
-        }
+        const message = await client.messages.create({
+            body: `You have been assigned a job. Please contact your employer for further details. Employer Contact: ${employerMobile}`,
+            from: twilioPhoneNumber, // Use your Twilio phone number
+            to: workerMobile
+        });
+
+        res.status(200).json({ success: true, message: 'SMS sent', sid: message.sid });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: 'Error logging in worker' });
+        console.error('Error sending SMS:', err.message || err);
+        res.status(500).json({ success: false, message: 'Error sending SMS: ' + (err.message || 'Unknown error') });
     }
 });
 
-// Fetch workers based on location
+
+
+// Endpoint to fetch workers based on location
 app.get('/api/workers', async (req, res) => {
-    const { location } = req.query;
+    const location = req.query.location;
 
     try {
-        const workers = await workersCollection.find({ location }).toArray(); // Assuming location is stored in the worker's document
-        res.status(200).json({ success: true, workers });
+        const workers = await workersCollection.find({ location }).toArray();
+        res.json({ workers });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: 'Error fetching workers' });
+        console.error('Error fetching workers:', err);
+        res.status(500).json({ message: 'Error fetching workers' });
     }
 });
-
 
 // Start server
 app.listen(port, () => {

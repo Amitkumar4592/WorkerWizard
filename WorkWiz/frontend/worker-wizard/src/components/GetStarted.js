@@ -23,9 +23,7 @@ const GetStarted = () => (
         <li className="dropdown">
           <span className="btn">Login</span>
           <ul className="dropdown-content">
-            <li>
-              <Link to="/worker-login">As Worker</Link>
-            </li>
+          
             <li>
               <Link to="/login-user">As User</Link>
             </li>

@@ -12,7 +12,6 @@ body, html {
 /* Hero Section */
 .hero {
     display: flex;
-    align-items: center;
     justify-content: center;
     background-color: #ecf0f1; /* Light background */
     padding: 60px 20px;
@@ -27,19 +26,22 @@ body, html {
 
 .hero-content {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: space-between; /* Ensures the image and text are side by side */
+    gap: 20px;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
+/* Hero Text Styling */
 .hero-text {
     max-width: 600px; /* Limit the width of the text */
+    flex: 1; /* Text takes up available space */
 }
 
 .hero-text h2 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #2c3e50; /* Darker text color */
+    color: #46d5ef; /* Darker text color */
 }
 
 .hero-text ul {
@@ -73,22 +75,28 @@ body, html {
     background-color: #16a085; /* Darker button on hover */
 }
 
-/* Hero Image */
+/* Hero Image Styling */
 .hero-image {
-    margin-top: 40px; /* Space between text and image */
+    flex: 1; /* Image takes up the remaining space */
+    display: flex;
+    justify-content: flex-end; /* Push image to the right side */
+    padding-left: 250px;
 }
 
 .hero-image img {
     width: 100%;
-    max-width: 500px; /* Limit the maximum width of the image */
+    max-width: 450px; /* Limit the maximum width of the image */
     height: auto;
     border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .hero {
+    .hero-content {
         flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .hero-text h2 {
@@ -101,5 +109,9 @@ body, html {
 
     .btn {
         padding: 10px 20px; /* Smaller button padding */
+    }
+
+    .hero-image {
+        margin-top: 20px; /* Add space between text and image on smaller screens */
     }
 }
